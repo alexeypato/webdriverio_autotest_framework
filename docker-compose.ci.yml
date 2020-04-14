@@ -1,0 +1,59 @@
+version: "3"
+services:
+  selenium-hub:
+    image: selenium/hub:${SELENIUM_VERSION}
+
+  chrome:
+    image: selenium/node-chrome:${SELENIUM_VERSION}
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - START_XVFB=false
+    depends_on: 
+      - selenium-hub
+
+  firefox:
+    image: selenium/node-firefox:${SELENIUM_VERSION}
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - START_XVFB=false
+    depends_on: 
+      - selenium-hub
+
+  node:
+    container_name: e2e-tests-container
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./report:/usr/app/report
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - CIRCLECI=${CIRCLECI}
+      - CIRCLE_BRANCH=${CIRCLE_BRANCH}
+      - CIRCLE_SHA1=${CIRCLE_SHA1}
+      - CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM}
+      - CIRCLE_BUILD_URL=${CIRCLE_BUILD_URL}
+      - GITHUB_ACTIONS=${GITHUB_ACTIONS}
+      - GITHUB_REF=${GITHUB_REF}
+      - GITHUB_SHA=${GITHUB_SHA}
+      - GITHUB_RUN_NUMBER=${GITHUB_RUN_NUMBER}
+      - TRAVIS=${TRAVIS}
+      - TRAVIS_BRANCH=${TRAVIS_BRANCH}
+      - TRAVIS_COMMIT=${TRAVIS_COMMIT}
+      - TRAVIS_BUILD_NUMBER=${TRAVIS_BUILD_NUMBER}
+      - TRAVIS_BUILD_WEB_URL=${TRAVIS_BUILD_WEB_URL}
+    depends_on:
+      - chrome
+      - firefox
