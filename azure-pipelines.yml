@@ -8,13 +8,6 @@ jobs:
     pool:
       vmImage: 'ubuntu-latest'
 
-    variables:
-      AZURECI: true
-      AZURE_BRANCH: '${Build.SourceBranchName}'
-      AZURE_SHA1: '${Build.SourceVersion}'
-      AZURE_BUILD_NUM: '${Build.BuildNumber}'
-      AZURE_BUILD_URL: '${Build.BuildUri}'
-
     steps:
       - task: NodeTool@0
         displayName: 'Install Node.js'
@@ -22,15 +15,14 @@ jobs:
           versionSpec: '12.x'
 
       - task: Bash@3
-        displayName: 'Set Environment Variables'
         inputs:
           targetType: 'inline'
-        script: |
-          export AZURECI=true
-          export AZURE_BRANCH="${Build.SourceBranchName}"
-          export AZURE_SHA1="${Build.SourceVersion}"
-          export AZURE_BUILD_NUM="${Build.BuildNumber}"
-          export AZURE_BUILD_URL="${Build.BuildUri}"
+          script: |
+            export AZURECI=true
+            export AZURE_BRANCH="${Build.SourceBranchName}"
+            export AZURE_SHA1="${Build.SourceVersion}"
+            export AZURE_BUILD_NUM="${Build.BuildNumber}"
+            export AZURE_BUILD_URL="${Build.BuildUri}"
 
       - script: |
           docker-compose -f docker-compose.ci.yml pull
