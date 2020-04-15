@@ -10,6 +10,10 @@ jobs:
 
     variables:
       AZURECI: true
+      AZURE_BRANCH: "${Build.SourceBranchName}"
+      AZURE_SHA1: "${Build.SourceVersion}"
+      AZURE_BUILD_NUM: "${Build.BuildNumber}"
+      AZURE_BUILD_URL: "${Build.BuildUri}"
 
     steps:
       - task: NodeTool@0
