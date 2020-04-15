@@ -21,6 +21,17 @@ jobs:
         inputs:
           versionSpec: '12.x'
 
+      - task: Bash@3
+        displayName: 'Set Environment Variables'
+        inputs:
+          targetType: 'inline'
+        script: |
+          export AZURECI=true
+          export AZURE_BRANCH="${Build.SourceBranchName}"
+          export AZURE_SHA1="${Build.SourceVersion}"
+          export AZURE_BUILD_NUM="${Build.BuildNumber}"
+          export AZURE_BUILD_URL="${Build.BuildUri}"
+
       - script: |
           docker-compose -f docker-compose.ci.yml pull
         displayName: 'Pull docker images'
