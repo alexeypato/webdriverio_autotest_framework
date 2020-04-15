@@ -40,6 +40,11 @@ services:
     environment:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
+      - AZURECI=${AZURECI}
+      - AZURE_BRANCH=${Build.SourceBranchName}
+      - AZURE_SHA1=${Build.SourceVersion}
+      - AZURE_BUILD_NUM=${Build.BuildNumber}
+      - AZURE_BUILD_URL=${Build.BuildUri}
       - CIRCLECI=${CIRCLECI}
       - CIRCLE_BRANCH=${CIRCLE_BRANCH}
       - CIRCLE_SHA1=${CIRCLE_SHA1}

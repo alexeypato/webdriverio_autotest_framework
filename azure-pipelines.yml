@@ -1,37 +1,41 @@
 trigger:
-- master
+  - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+jobs:
+  - job: Autotests
+    displayName: WebdriverIO Autotests Framework
 
-steps:
-- task: NodeTool@0
-  displayName: 'Install Node.js'
-  inputs:
-    versionSpec: '12.x'
+    pool:
+      vmImage: "ubuntu-latest"
 
-- script: |
-    docker-compose -f docker-compose.ci.yml pull
-  displayName: 'Pull docker images'
+    steps:
+      - task: NodeTool@0
+        displayName: "Install Node.js"
+        inputs:
+          versionSpec: "12.x"
 
-- script: |
-    docker-compose -f docker-compose.ci.yml build
-  displayName: 'Build docker images'
+      - script: |
+          docker-compose -f docker-compose.ci.yml pull
+        displayName: "Pull docker images"
 
-- script: |
-    docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
-  displayName: 'Run tests'
+      - script: |
+          docker-compose -f docker-compose.ci.yml build
+        displayName: "Build docker images"
 
-- task: CopyFiles@2
-  displayName: Copy Cucumber Report
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)/report'
-    Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)/report'
-  condition: succeededOrFailed()
+      - script: |
+          docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
+        displayName: "Run tests"
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()
+      - task: CopyFiles@2
+        displayName: Copy Cucumber Report
+        inputs:
+          SourceFolder: "$(System.DefaultWorkingDirectory)/report"
+          Contents: "**"
+          TargetFolder: "$(build.artifactstagingdirectory)/report"
+        condition: succeededOrFailed()
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact"
+        inputs:
+          PathtoPublish: "$(build.artifactstagingdirectory)"
+        condition: succeededOrFailed()

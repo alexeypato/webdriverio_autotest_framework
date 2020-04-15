@@ -1,4 +1,4 @@
-# Web Automation Framework
+# WebdriverIO Autotest Framework
 
 Project to write BDD tests with [Cucumber](https://cucumber.io/) and execute with [docker selenium](https://github.com/SeleniumHQ/docker-selenium).
 Tests are written in an ordinary language that bridges the gap between business and technical people.

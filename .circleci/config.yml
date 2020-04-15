@@ -4,7 +4,7 @@ orbs:
   docker: circleci/docker@1.0.0
 
 jobs:
-   e2e-tests:
+  e2e-tests:
     executor: docker/docker
     working_directory: ~/project
 
@@ -25,12 +25,13 @@ jobs:
           command: docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
           no_output_timeout: 2m
       - run:
+          halt_build_on_fail: false
           name: Copy report
           command: docker cp e2e-tests-container:/usr/app/report/cucumber/html/. ~/report
       - store_artifacts:
           path: ~/report
 
 workflows:
-    e2e-tests:
-      jobs:
-        - e2e-tests
+  e2e-tests:
+    jobs:
+      - e2e-tests

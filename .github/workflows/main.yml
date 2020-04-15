@@ -7,18 +7,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Pull docker images
-      run: docker-compose -f docker-compose.ci.yml pull
+      - name: Pull docker images
+        run: docker-compose -f docker-compose.ci.yml pull
 
-    - name: Build docker images
-      run: docker-compose -f docker-compose.ci.yml build
+      - name: Build docker images
+        run: docker-compose -f docker-compose.ci.yml build
 
-    - name: Run tests
-      run: docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
+      - name: Run tests
+        run: docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
 
-    - uses: actions/upload-artifact@v1 
-      with:
-        name: report
-        path: report
+      - uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: report
+          path: report

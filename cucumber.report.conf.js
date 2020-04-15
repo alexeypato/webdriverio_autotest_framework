@@ -37,11 +37,33 @@ report.generate({
 
 function addCIMetadata(customData) {
   customData.data = customData.data
+    .concat(...fromAzureCI())
     .concat(...fromCircleCI())
     .concat(...fromGithubActions())
     .concat(...fromTravis());
 
   return customData;
+}
+
+function* fromAzureCI() {
+  if (process.env.AZURECI) {
+    yield { label: "CI", value: "AzureDevOpsCI" };
+  }
+
+  if (process.env.AZURE_BRANCH) {
+    yield { label: "Branch", value: process.env.AZURE_BRANCH };
+  }
+
+  if (process.env.AZURE_SHA1) {
+    yield { label: "Commit", value: process.env.AZURE_SHA1 };
+  }
+
+  if (process.env.AZURE_BUILD_NUM) {
+    yield {
+      label: "Build",
+      value: `<a href="${process.env.AZURE_BUILD_URL}" target="_blank">${process.env.AZURE_BUILD_NUM}</a>`,
+    };
+  }
 }
 
 function* fromCircleCI() {

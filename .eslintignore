@@ -1,3 +1,4 @@
 /report/*
 /node_modules/*
 wdio.conf.js
+cucumber.report.conf.js
