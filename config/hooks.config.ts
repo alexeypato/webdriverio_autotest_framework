@@ -21,6 +21,17 @@ export const hooksConfig = {
   // onPrepare: function (config, capabilities) {
   // },
   /**
+   * Gets executed before a worker process is spawned and can be used to initialise specific service
+   * for that worker as well as modify runtime environments in an async fashion.
+   * @param  {String} cid      capability id (e.g 0-0)
+   * @param  {[type]} caps     object containing capabilities for session that will be spawn in the worker
+   * @param  {[type]} specs    specs to be run in the worker process
+   * @param  {[type]} args     object that will be merged with the main configuration once worker is initialised
+   * @param  {[type]} execArgv list of string arguments passed to the worker process
+   */
+  // onWorkerStart: function (cid, caps, specs, args, execArgv) {
+  // },
+  /**
    * Gets executed just before initialising the webdriver session and test framework. It allows you
    * to manipulate configurations depending on the capability or spec.
    * @param {Object} config wdio configuration object
@@ -35,10 +46,11 @@ export const hooksConfig = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
-  before(capabilities, specs): void {
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  before: function (capabilities, specs) {
     browser.setWindowSize(
       parseInt(process.env.SCREEN_WIDTH, 10),
-      parseInt(process.env.SCREEN_HEIGHT, 10),
+      parseInt(process.env.SCREEN_HEIGHT, 10)
     );
   },
   /**
@@ -48,44 +60,44 @@ export const hooksConfig = {
    */
   // beforeCommand: function (commandName, args) {
   // },
-
   /**
-   * Hook that gets executed before the suite starts
-   * @param {Object} suite suite details
+   * Runs before a Cucumber feature
    */
-  // beforeSuite: function (suite) {
+  // beforeFeature: function (uri, feature, scenarios) {
   // },
   /**
-   * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
-   * @param {Object} test test details
+   * Runs before a Cucumber scenario
    */
-  // beforeTest: function (test) {
-  //     browser.setWindowSize(1920, 1080)
+  // beforeScenario: function (uri, feature, scenario, sourceLocation) {
   // },
   /**
-   * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
-   * beforeEach in Mocha)
+   * Runs before a Cucumber step
    */
-  // beforeHook: function () {
+  // beforeStep: function ({ uri, feature, step }, context) {
   // },
   /**
-   * Hook that gets executed _after_ a hook within the suite starts (e.g. runs after calling
-   * afterEach in Mocha)
+   * Runs after a Cucumber step
    */
-  // afterHook: function () {
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  afterStep: function (
+    { uri, feature, step },
+    context,
+    { error, result, duration, passed, retries }
+  ) {
+    if (error) {
+      addObject(error);
+      addScreenshot();
+    }
+  },
+  /**
+   * Runs after a Cucumber scenario
+   */
+  // afterScenario: function (uri, feature, scenario, result, sourceLocation) {
   // },
   /**
-   * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
-   * @param {Object} test test details
+   * Runs after a Cucumber feature
    */
-  // tslint:disable-next-line: object-literal-shorthand
-  // afterTest: function (test) {
-  // },
-  /**
-   * Hook that gets executed after the suite has ended
-   * @param {Object} suite suite details
-   */
-  // afterSuite: function (suite) {
+  // afterFeature: function (uri, feature, scenarios) {
   // },
 
   /**
@@ -115,32 +127,20 @@ export const hooksConfig = {
   // afterSession: function (config, capabilities, specs) {
   // },
   /**
-   * Gets executed after all workers got shut down and the process is about to exit.
+   * Gets executed after all workers got shut down and the process is about to exit. An error
+   * thrown in the onComplete hook will result in the test run failing.
    * @param {Object} exitCode 0 - success, 1 - fail
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {<Object>} results object containing test results
    */
   // onComplete: function(exitCode, config, capabilities, results) {
-  // }
-
+  // },
   /**
-   * Cucumber-specific hooks
+   * Gets executed when a refresh happens.
+   * @param {String} oldSessionId session ID of the old session
+   * @param {String} newSessionId session ID of the new session
    */
-  // beforeFeature(uri, feature, scenarios) {
-  // },
-  // beforeScenario(uri, feature, scenario, sourceLocation) {
-  // },
-  // beforeStep(uri, feature, stepData, context) {
-  // },
-  afterStep(uri, feature, { error, result, duration, passed }, stepData, context): void {
-    if (error) {
-      addObject(error);
-      addScreenshot();
-    }
-  },
-  // afterScenario(uri, feature, scenario, result, sourceLocation) {
-  // },
-  // afterFeature(uri, feature, scenarios) {
-  // }
+  //onReload: function(oldSessionId, newSessionId) {
+  //}
 };

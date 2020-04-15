@@ -14,9 +14,8 @@
       "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
       "console": "integratedTerminal",
       "env": {
-        "DEBUG_TESTS": "true",
-        "VNC_SUPPORT": "false"
-      },
+        "DEBUG_TESTS": "true"
+      }
     },
     {
       "name": "Debug all tests",
@@ -28,37 +27,8 @@
       "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
       "console": "integratedTerminal",
       "env": {
-        "DEBUG_TESTS": "true",
-        "VNC_SUPPORT": "false"
-      },
-    },
-    {
-      "name": "VNC Debug current test",
-      "type": "node",
-      "request": "launch",
-      "args": ["wdio.conf.js", "--spec", "${file}"],
-      "cwd": "${workspaceFolder}",
-      "autoAttachChildProcesses": true,
-      "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
-      "console": "integratedTerminal",
-      "env": {
-        "DEBUG_TESTS": "true",
-        "VNC_SUPPORT": "true"
-      },
-    },
-    {
-      "name": "VNC Debug all tests",
-      "type": "node",
-      "request": "launch",
-      "args": ["wdio.conf.js", "--spec"],
-      "cwd": "${workspaceFolder}",
-      "autoAttachChildProcesses": true,
-      "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
-      "console": "integratedTerminal",
-      "env": {
-        "DEBUG_TESTS": "true",
-        "VNC_SUPPORT": "true"
-      },
-    },
+        "DEBUG_TESTS": "true"
+      }
+    }
   ]
 }

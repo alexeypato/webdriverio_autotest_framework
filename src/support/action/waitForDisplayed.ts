@@ -6,5 +6,5 @@
  */
 export function waitForDisplayed(selector: string, falseCase: string): void {
   const ms = 10000;
-  $(selector).waitForDisplayed(ms, !!falseCase);
+  $(selector).waitForDisplayed({ timeout: ms, reverse: !!falseCase });
 }

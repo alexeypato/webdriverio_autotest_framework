@@ -12,13 +12,10 @@ export const config = {
 
   framework: 'cucumber',
 
-  maxInstances: process.env.DEBUG_TESTS === 'true' ? 1 : 2,
-  capabilities: [
-    capabilitiesChromeConfig,
-    capabilitiesFirefoxConfig,
-  ],
+  maxInstances: process.env.DEBUG_TESTS === 'true' ? 1 : 10,
+  capabilities: [capabilitiesChromeConfig, capabilitiesFirefoxConfig],
 
-  services: [],
+  services: process.env.DEBUG_TESTS === 'true' ? ['selenium-standalone'] : [],
 
   ...serverConfig,
   ...testsConfig,

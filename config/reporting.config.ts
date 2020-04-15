@@ -1,8 +1,12 @@
 export const reportingConfig = {
-  reporters: ['spec', [
-    'cucumberjs-json', {
-      jsonFolder: './report/cucumber/',
-    }],
+  reporters: [
+    'spec',
+    [
+      'cucumberjs-json',
+      {
+        jsonFolder: './report/cucumber/',
+      },
+    ],
   ],
 
   cucumberOpts: {
@@ -29,9 +33,7 @@ export const reportingConfig = {
     // <string[]> (name) specify the profile to use
     profile: [],
     // <string[]> (file/dir) require files before executing features
-    require: [
-      './src/steps/**/*.ts',
-    ],
+    require: ['./src/steps/**/*.ts'],
     // <string> specify a custom snippet syntax
     snippetSyntax: undefined,
     // <boolean> fail if there are any undefined or pending steps
