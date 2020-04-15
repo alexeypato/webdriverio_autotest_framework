@@ -6,43 +6,43 @@ jobs:
     displayName: WebdriverIO Autotests Framework
 
     pool:
-      vmImage: "ubuntu-latest"
+      vmImage: 'ubuntu-latest'
 
     variables:
       AZURECI: true
-      AZURE_BRANCH: "${Build.SourceBranchName}"
-      AZURE_SHA1: "${Build.SourceVersion}"
-      AZURE_BUILD_NUM: "${Build.BuildNumber}"
-      AZURE_BUILD_URL: "${Build.BuildUri}"
+      AZURE_BRANCH: '${Build.SourceBranchName}'
+      AZURE_SHA1: '${Build.SourceVersion}'
+      AZURE_BUILD_NUM: '${Build.BuildNumber}'
+      AZURE_BUILD_URL: '${Build.BuildUri}'
 
     steps:
       - task: NodeTool@0
-        displayName: "Install Node.js"
+        displayName: 'Install Node.js'
         inputs:
-          versionSpec: "12.x"
+          versionSpec: '12.x'
 
       - script: |
           docker-compose -f docker-compose.ci.yml pull
-        displayName: "Pull docker images"
+        displayName: 'Pull docker images'
 
       - script: |
           docker-compose -f docker-compose.ci.yml build
-        displayName: "Build docker images"
+        displayName: 'Build docker images'
 
       - script: |
           docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
-        displayName: "Run tests"
+        displayName: 'Run tests'
 
       - task: CopyFiles@2
         displayName: Copy Cucumber Report
         inputs:
-          SourceFolder: "$(System.DefaultWorkingDirectory)/report"
-          Contents: "**"
-          TargetFolder: "$(build.artifactstagingdirectory)/report"
+          SourceFolder: '$(System.DefaultWorkingDirectory)/report'
+          Contents: '**'
+          TargetFolder: '$(build.artifactstagingdirectory)/report'
         condition: succeededOrFailed()
 
       - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact"
+        displayName: 'Publish Artifact'
         inputs:
-          PathtoPublish: "$(build.artifactstagingdirectory)"
+          PathtoPublish: '$(build.artifactstagingdirectory)'
         condition: succeededOrFailed()
