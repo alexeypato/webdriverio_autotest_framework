@@ -1,0 +1,37 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: '12.x'
+
+- script: |
+    docker-compose -f docker-compose.ci.yml pull
+  displayName: 'Pull docker images'
+
+- script: |
+    docker-compose -f docker-compose.ci.yml build
+  displayName: 'Build docker images'
+
+- script: |
+    docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
+  displayName: 'Run tests'
+
+- task: CopyFiles@2
+  displayName: Copy Cucumber Report
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)/report'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)/report'
+  condition: succeededOrFailed()
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+  condition: succeededOrFailed()
