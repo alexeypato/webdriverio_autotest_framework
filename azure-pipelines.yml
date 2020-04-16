@@ -8,11 +8,20 @@ jobs:
       pool:
           vmImage: 'ubuntu-latest'
 
+      variables:
+          allureVersion: '2.13.2'
+
       steps:
           - task: NodeTool@0
             displayName: 'Install Node.js'
             inputs:
                 versionSpec: '12.x'
+
+          - script: |
+                sudo apt update
+                cd /opt
+                wget -c https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/$(allureVersion)/allure-commandline-$(allureVersion).tgz -O - | tar -xz && chmod +x /opt/allure-$(allureVersion)/bin/allure
+            displayName: 'Install latest $(browserApp) and allure on Linux'
 
           - script: |
                 docker-compose -f docker-compose.ci.yml pull
@@ -25,10 +34,6 @@ jobs:
           - script: |
                 docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
             displayName: 'Run tests'
-
-          - script: |
-                npm run report.ci
-            displayName: 'Generate Allure Report'
 
           - task: CopyFiles@2
             displayName: Copy Allure Report

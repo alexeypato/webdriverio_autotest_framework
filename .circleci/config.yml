@@ -1,12 +1,12 @@
-version: 2.1
-
-orbs:
-    docker: circleci/docker@1.0.0
-
+version: 2
 jobs:
     e2e-tests:
-        executor: docker/docker
+        docker:
+            - image: circleci/python:3.6
+            - image: circleci/openjdk:8-jdk-stretch
         working_directory: ~/project
+        environment:
+            JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
 
         steps:
             - checkout:
@@ -28,11 +28,10 @@ jobs:
                   name: Copy report
                   command: docker cp e2e-tests-container:/usr/app/report/allure-report/. ~/report
                   when: always
-
             - store_artifacts:
                   path: ~/report
-
 workflows:
     e2e-tests:
         jobs:
             - e2e-tests
+    version: 2
