@@ -1,6 +1,5 @@
 /* eslint @typescript-eslint/no-unused-vars: "off" */
 import log from '@wdio/logger';
-import { addObject, addScreenshot } from '../src/support/lib/context';
 
 const logger = log('@automation');
 logger.info('Starting tests...');
@@ -85,8 +84,7 @@ export const hooksConfig = {
         { error, result, duration, passed, retries }
     ) {
         if (error) {
-            addObject(error);
-            addScreenshot();
+            browser.takeScreenshot();
         }
     },
     /**

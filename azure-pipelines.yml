@@ -1,51 +1,45 @@
 trigger:
-  - master
+    - master
 
 jobs:
-  - job: Autotests
-    displayName: WebdriverIO Autotests Framework
+    - job: Autotests
+      displayName: WebdriverIO Autotests Framework
 
-    pool:
-      vmImage: 'ubuntu-latest'
+      pool:
+          vmImage: 'ubuntu-latest'
 
-    steps:
-      - task: NodeTool@0
-        displayName: 'Install Node.js'
-        inputs:
-          versionSpec: '12.x'
+      steps:
+          - task: NodeTool@0
+            displayName: 'Install Node.js'
+            inputs:
+                versionSpec: '12.x'
 
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            export AZURECI=true
-            export AZURE_BRANCH='${Build.SourceBranchName}'
-            export AZURE_SHA1='${Build.SourceVersion}'
-            export AZURE_BUILD_NUM='${Build.BuildNumber}'
-            export AZURE_BUILD_URL='${Build.BuildUri}'
+          - script: |
+                docker-compose -f docker-compose.ci.yml pull
+            displayName: 'Pull docker images'
 
-      - script: |
-          docker-compose -f docker-compose.ci.yml pull
-        displayName: 'Pull docker images'
+          - script: |
+                docker-compose -f docker-compose.ci.yml build
+            displayName: 'Build docker images'
 
-      - script: |
-          docker-compose -f docker-compose.ci.yml build
-        displayName: 'Build docker images'
+          - script: |
+                docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
+            displayName: 'Run tests'
 
-      - script: |
-          docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
-        displayName: 'Run tests'
+          - script: |
+                npm run report.ci
+            displayName: 'Generate Allure Report'
 
-      - task: CopyFiles@2
-        displayName: Copy Cucumber Report
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/report'
-          Contents: '**'
-          TargetFolder: '$(build.artifactstagingdirectory)/report'
-        condition: succeededOrFailed()
+          - task: CopyFiles@2
+            displayName: Copy Allure Report
+            inputs:
+                SourceFolder: '$(System.DefaultWorkingDirectory)/report'
+                Contents: '**'
+                TargetFolder: '$(build.artifactstagingdirectory)/report'
+            condition: succeededOrFailed()
 
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish Artifact'
-        inputs:
-          PathtoPublish: '$(build.artifactstagingdirectory)'
-        condition: succeededOrFailed()
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+                PathtoPublish: '$(build.artifactstagingdirectory)'
+            condition: succeededOrFailed()

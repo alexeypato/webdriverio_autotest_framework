@@ -1,13 +1,21 @@
-import cucumberJson from 'wdio-cucumberjs-json-reporter';
+import allureReporter from '@wdio/allure-reporter';
 
 export function addText(value: string): void {
-  cucumberJson.attach(value);
+    allureReporter.addAttachment('Text', value);
 }
 
 export function addObject<T extends object>(value: T): void {
-  cucumberJson.attach(value, 'application/json');
+    allureReporter.addAttachment(
+        'Object',
+        JSON.stringify(value),
+        'application/json'
+    );
 }
 
-export function addScreenshot(): void {
-  cucumberJson.attach(browser.takeScreenshot(), 'image/png');
+export function addScreenshot(path: string): void {
+    allureReporter.addAttachment(
+        'Screenshot',
+        Buffer.from(path, 'base64'),
+        'image/png'
+    );
 }

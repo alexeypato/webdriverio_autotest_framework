@@ -3,7 +3,9 @@ import { join } from 'path';
 export const loggingConfig = {
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'error',
-    outputDir: join(__dirname, '../logs'),
+    // Enables colors for log output.
+    coloredLogs: true,
+    outputDir: join(__dirname, '../report/logs'),
     //
     // Set specific log levels per logger
     // loggers:

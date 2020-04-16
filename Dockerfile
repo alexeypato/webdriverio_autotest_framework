@@ -16,7 +16,6 @@ ADD ./.env ./
 ADD ./tsconfig.json ./
 ADD ./.eslintrc.js ./
 ADD ./wdio.conf.js ./
-ADD ./cucumber.report.conf.js ./
 ADD ./config config
 ADD ./src src
 RUN npm run lint

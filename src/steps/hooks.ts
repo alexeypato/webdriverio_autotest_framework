@@ -1,5 +1,5 @@
 import { After, Before, HookScenarioResult } from 'cucumber';
-import { addObject, addScreenshot } from '../support/lib/context';
+import { addObject } from '../support/lib/context';
 
 Before({ tags: '@OnlyChrome' }, () => {
     if (browser.capabilities.browserName !== 'chrome') {
@@ -28,5 +28,5 @@ After({ tags: '@Verbose' }, (scenario: HookScenarioResult) => {
         error: scenario.result.exception,
     });
 
-    addScreenshot();
+    browser.takeScreenshot();
 });

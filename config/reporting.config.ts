@@ -2,9 +2,12 @@ export const reportingConfig = {
     reporters: [
         'spec',
         [
-            'cucumberjs-json',
+            'allure',
             {
-                jsonFolder: './report/cucumber/',
+                outputDir: './report/allure-results',
+                disableWebdriverStepsReporting: true,
+                disableWebdriverScreenshotsReporting: false,
+                useCucumberStepReporter: true,
             },
         ],
     ],

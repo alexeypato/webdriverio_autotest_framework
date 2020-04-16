@@ -1,6 +1,4 @@
 /report/*
 /node_modules/*
-/config/*.LOCAL.*
 /types/*
 wdio.conf.js
-cucumber.report.conf.js
