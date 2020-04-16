@@ -8,9 +8,6 @@ jobs:
       pool:
           vmImage: 'ubuntu-latest'
 
-      variables:
-          allureVersion: '2.13.2'
-
       steps:
           - task: NodeTool@0
             displayName: 'Install Node.js'
@@ -18,21 +15,15 @@ jobs:
                 versionSpec: '12.x'
 
           - script: |
-                sudo apt update
-                cd /opt
-                wget -c https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/$(allureVersion)/allure-commandline-$(allureVersion).tgz -O - | tar -xz && chmod +x /opt/allure-$(allureVersion)/bin/allure
-            displayName: 'Install latest $(browserApp) and allure on Linux'
+                npm install
+            displayName: 'Install dependencies required to run the tests'
 
           - script: |
-                docker-compose -f docker-compose.ci.yml pull
-            displayName: 'Pull docker images'
+                npm run selenium
+            displayName: 'Starts the selenium hub and browser nodes in docker containers'
 
           - script: |
-                docker-compose -f docker-compose.ci.yml build
-            displayName: 'Build docker images'
-
-          - script: |
-                docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
+                npm run test
             displayName: 'Run tests'
 
           - task: CopyFiles@2
