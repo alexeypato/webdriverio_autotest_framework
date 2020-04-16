@@ -1,4 +1,4 @@
-require("ts-node/register");
-require("dotenv").config();
+require('ts-node/register');
+require('dotenv').config();
 
-exports.config = require("./config").config;
+exports.config = require('./config').config;

@@ -7,19 +7,19 @@ import { serverConfig } from './server.config';
 import { testsConfig } from './tests.config';
 
 export const config = {
-  runner: 'local',
-  baseUrl: 'http://localhost',
+    runner: 'local',
+    baseUrl: 'http://localhost',
 
-  framework: 'cucumber',
+    framework: 'cucumber',
 
-  maxInstances: process.env.DEBUG_TESTS === 'true' ? 1 : 10,
-  capabilities: [capabilitiesChromeConfig, capabilitiesFirefoxConfig],
+    maxInstances: process.env.DEBUG_TESTS === 'true' ? 1 : 10,
+    capabilities: [capabilitiesChromeConfig, capabilitiesFirefoxConfig],
 
-  services: process.env.DEBUG_TESTS === 'true' ? ['selenium-standalone'] : [],
+    services: process.env.DEBUG_TESTS === 'true' ? ['selenium-standalone'] : [],
 
-  ...serverConfig,
-  ...testsConfig,
-  ...loggingConfig,
-  ...reportingConfig,
-  ...hooksConfig,
+    ...serverConfig,
+    ...testsConfig,
+    ...loggingConfig,
+    ...reportingConfig,
+    ...hooksConfig,
 };

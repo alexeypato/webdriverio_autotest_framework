@@ -12,7 +12,7 @@ The docker selenium simplifies the setup and avoids any local installation of br
 - BDD tests with [Cucumber](https://cucumber.io/docs/cucumber/) and over 150 predefined steps
 - Implement custom steps with [TypeScript](https://www.typescriptlang.org/)
 - Support for debugging tests
-- Possibility to visually see the execution in browser with _VNC_
+- Possibility to visually see the execution in browser
 - Detailed report generation ([example](https://wswebcreation.github.io/multiple-cucumber-html-reporter/browsers/index.html))
 - Integration with CI tools
 
@@ -203,39 +203,6 @@ The test will start and run only the current file. Once started you can navigate
 
 To debug all files follow the same steps but use the _Debug all tests_ option.
 
-## VNC support
-
-In some cases, you might need to visually see the execution in the browser. That is possible thanks to docker selenium debug images that
-have `XVFB` and `VNC` server installed. Note that debug images are slower and are intended only for development mode.
-
-### Prerequisites
-
-Download on your machine the [VNC viewer](https://www.realvnc.com/en/connect/download/viewer/).
-
-### Selenium Debug containers
-
-If you already have docker selenium containers running, stop them:
-
-```sh
-npm run selenium:stop
-```
-
-Start selenium _debug_ containers that enable the VNC support:
-
-```sh
-# starts the selenium containers with VNC support
-npm run selenium:vnc
-```
-
-### VNC connection options
-
-| Browser     | Connection options |
-| ----------- | ------------------ |
-| **Chrome**  | `127.0.0.1:5900`   |
-| **Firefox** | `127.0.0.1:5901`   |
-
-Now you can connect and enter the remote session.
-
 ### Running tests
 
 Tests by default run in _headless_ mode so that a browser window is not visually created.
@@ -243,18 +210,9 @@ To run the tests with enabled browser window:
 
 ```sh
 # runs the tests without headless option
-npm run test:vnc
-```
-
-Note that even if you started selenium with VNC support, you need to run the `test:vnc` command to see the browsers visually.
-
-Debugging with VNC support is also possible. If you're using _Visual Studio Code_ there are `VNC Debug current test` and
-`VNC Debug all tests` debugging configurations that work similar to configurations described in [Debugging tests](#debugging-tests) section.
-
-To stop the debug containers use the same command:
-
-```sh
-npm run selenium:stop
+npm run test:run:local:chrome
+or
+npm run test:run:local:firefox
 ```
 
 ## License

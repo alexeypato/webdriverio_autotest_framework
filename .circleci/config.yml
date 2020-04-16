@@ -25,9 +25,9 @@ jobs:
           command: docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
           no_output_timeout: 2m
       - run:
-          halt_build_on_fail: false
           name: Copy report
           command: docker cp e2e-tests-container:/usr/app/report/cucumber/html/. ~/report
+          when: always
       - store_artifacts:
           path: ~/report
 
