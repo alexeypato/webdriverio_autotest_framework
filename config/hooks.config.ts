@@ -1,4 +1,3 @@
-/* eslint @typescript-eslint/no-unused-vars: "off" */
 import log from '@wdio/logger';
 
 const logger = log('@automation');
@@ -45,8 +44,8 @@ export const hooksConfig = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    before: function (capabilities, specs) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    before: function (capabilities, specs): void {
         browser.setWindowSize(
             parseInt(process.env.SCREEN_WIDTH, 10),
             parseInt(process.env.SCREEN_HEIGHT, 10)
@@ -77,12 +76,13 @@ export const hooksConfig = {
     /**
      * Runs after a Cucumber step
      */
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     afterStep: function (
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         { uri, feature, step },
         context,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         { error, result, duration, passed, retries }
-    ) {
+    ): void {
         if (error) {
             browser.takeScreenshot();
         }

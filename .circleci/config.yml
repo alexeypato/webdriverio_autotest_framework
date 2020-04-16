@@ -25,10 +25,6 @@ jobs:
                   command: docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
                   no_output_timeout: 2m
             - run:
-                  name: Generate Allure Report
-                  command: npm run report.ci
-                  when: always
-            - run:
                   name: Copy report
                   command: docker cp e2e-tests-container:/usr/app/report/allure-report/. ~/report
                   when: always
