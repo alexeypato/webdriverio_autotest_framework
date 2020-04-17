@@ -2,7 +2,7 @@ version: 2
 jobs:
     e2e-tests:
         docker:
-            - image: circleci/node:12.6.2
+            - image: circleci/node:12.6.0
         working_directory: ~/project
 
         steps:
@@ -25,7 +25,7 @@ jobs:
                   command: npm run selenium
             - run:
                   name: Run tests and create allure report
-                  command: npm run test && npm run report:ci
+                  command: npm run test && npm run report:ci || npm run report:ci
             - store_artifacts:
                   path: ~/project/report
 workflows:
