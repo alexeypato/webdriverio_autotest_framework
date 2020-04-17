@@ -11,6 +11,8 @@ RUN chmod 755 run.sh
 ADD ./package.json package.json
 ADD ./package-lock.json package-lock.json
 
+RUN apt-get update
+RUN	apt install default-jre -y
 RUN npm ci
 ADD ./.env ./
 ADD ./tsconfig.json ./

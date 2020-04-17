@@ -24,6 +24,7 @@ jobs:
             - run:
                   name: Copy report
                   command: docker cp e2e-tests-container:/usr/app/report/. ~/report
+                  when: always
             - store_artifacts:
                   path: ~/report
 workflows:
