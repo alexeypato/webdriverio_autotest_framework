@@ -23,7 +23,7 @@ jobs:
             displayName: 'Starts the selenium hub and browser nodes in docker containers'
 
           - script: |
-                npm run test
+                npm run test && npm run report:ci
             displayName: 'Run tests'
 
           - task: CopyFiles@2
