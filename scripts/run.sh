@@ -13,6 +13,6 @@ fi
 ./node_modules/.bin/wdio --spec || EXIT_CODE=$?
 
 # generate report
-npm run report
+npm run report:ci
 
 exit $EXIT_CODE

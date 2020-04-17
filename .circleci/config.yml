@@ -2,7 +2,6 @@ version: 2
 jobs:
     e2e-tests:
         docker:
-            - image: circleci/node:10.16.3
             - image: circleci/python:3.6
         working_directory: ~/project
 
@@ -11,25 +10,22 @@ jobs:
                   path: ~/project
             - setup_remote_docker
             - run:
-                  name: update-npm
-                  command: sudo npm install -g npm@latest
-            - restore_cache:
-                  key: dependency-cache-{{ checksum "package-lock.json" }}
+                  name: Pull docker images
+                  command: docker-compose -f docker-compose.ci.yml pull
+                  no_output_timeout: 1m
             - run:
-                  name: install-npm
-                  command: npm install
-            - save_cache:
-                  key: dependency-cache-{{ checksum "package-lock.json" }}
-                  paths:
-                      - ./node_modules
+                  name: Build docker images
+                  command: docker-compose -f docker-compose.ci.yml build
+                  no_output_timeout: 2m
             - run:
-                  name: Starts the selenium hub and browser nodes in docker containers
-                  command: npm run selenium
+                  name: Run tests
+                  command: docker-compose -f docker-compose.ci.yml up --abort-on-container-exit --exit-code-from node
+                  no_output_timeout: 2m
             - run:
-                  name: Run tests and create allure report
-                  command: npm run test && npm run report:ci || npm run report:ci
+                  name: Copy report
+                  command: docker cp e2e-tests-container:/usr/app/report/. ~/report
             - store_artifacts:
-                  path: ~/project/report
+                  path: ~/report
 workflows:
     e2e-tests:
         jobs:
