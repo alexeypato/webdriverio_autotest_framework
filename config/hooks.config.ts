@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import log from '@wdio/logger';
-
 const logger = log('@automation');
 logger.info('Starting tests...');
+
+const { addArgument } = require('@wdio/allure-reporter').default;
+let scenarioCounter = 0;
 
 export const hooksConfig = {
     // =====
@@ -44,7 +47,6 @@ export const hooksConfig = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     before: function (capabilities, specs): void {
         browser.setWindowSize(
             parseInt(process.env.SCREEN_WIDTH, 10),
@@ -77,10 +79,8 @@ export const hooksConfig = {
      * Runs after a Cucumber step
      */
     afterStep: function (
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         { uri, feature, step },
         context,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         { error, result, duration, passed, retries }
     ): void {
         if (error) {
@@ -90,8 +90,16 @@ export const hooksConfig = {
     /**
      * Runs after a Cucumber scenario
      */
-    // afterScenario: function (uri, feature, scenario, result, sourceLocation) {
-    // },
+    afterScenario: function (
+        uri,
+        feature,
+        scenario,
+        result,
+        sourceLocation
+    ): void {
+        scenarioCounter += 1;
+        addArgument('Scenario #', scenarioCounter);
+    },
     /**
      * Runs after a Cucumber feature
      */

@@ -8,8 +8,8 @@
         "selenium": "docker-compose up -d",
         "selenium:stop": "docker-compose down -v",
         "test": "npm run test:run",
-        "test:run:local:chrome": "npm run report:clean && npm run test:local:chrome && npm run report || npm run report",
-        "test:run:local:firefox": "npm run report:clean && npm run test:local:firefox && npm run report || npm run report",
+        "test:run:local:chrome": "npm run selenium:stop && npm run report:clean && npm run test:local:chrome && npm run report || npm run report",
+        "test:run:local:firefox": "npm run selenium:stop && npm run report:clean && npm run test:local:firefox && npm run report || npm run report",
         "test:run": "node ./node_modules/@wdio/cli/bin/wdio.js --spec",
         "test:local:chrome": "node ./node_modules/@wdio/cli/bin/wdio.js ./config/wdio.LOCAL.CHROME.conf.js --spec",
         "test:local:firefox": "node ./node_modules/@wdio/cli/bin/wdio.js ./config/wdio.LOCAL.FIREFOX.conf.js --spec",
@@ -20,9 +20,18 @@
         "ci": "docker-compose -f docker-compose.ci.yml up --force-recreate --renew-anon-volumes --abort-on-container-exit --exit-code-from node"
     },
     "keywords": [
+        "automation",
         "webdriverio",
+        "javascript",
+        "typescript",
+        "webdriver",
+        "node",
+        "test",
         "autotests",
-        "selenium"
+        "selenium",
+        "azure-devops",
+        "circleci",
+        "cucumber"
     ],
     "author": "Aliaksei Patotski",
     "license": "MIT",

@@ -23,8 +23,13 @@ jobs:
             displayName: 'Starts the selenium hub and browser nodes in docker containers'
 
           - script: |
-                npm run test && npm run report:ci || npm run report:ci
+                npm run test
             displayName: 'Run tests'
+
+          - script: |
+                npm run report:ci
+            displayName: 'Generate Allure Report'
+            condition: succeededOrFailed()
 
           - task: CopyFiles@2
             displayName: Copy Allure Report

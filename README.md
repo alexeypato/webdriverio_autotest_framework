@@ -1,31 +1,34 @@
 # WebdriverIO Autotest Framework
 
+[![tested with webdriver.io](https://img.shields.io/badge/tested%20with-webdriver.io-%23ea5906)](https://webdriver.io/)
+[![CircleCI](https://circleci.com/gh/alexeypato/webdriverio_autotest_framework/tree/master.svg?style=svg)](https://circleci.com/gh/alexeypato/webdriverio_autotest_framework/tree/master)
+[![Build Status](https://dev.azure.com/alexeypato/WebdriverIO%20Autotest%20Framework/_apis/build/status/alexeypato.webdriverio_autotest_framework?branchName=master)](https://dev.azure.com/alexeypato/WebdriverIO%20Autotest%20Framework/_build/latest?definitionId=2&branchName=master)
+
 Project to write BDD tests with [Cucumber](https://cucumber.io/) and execute with [docker selenium](https://github.com/SeleniumHQ/docker-selenium).
 Tests are written in an ordinary language that bridges the gap between business and technical people.
 The docker selenium simplifies the setup and avoids any local installation of browser specific dependencies.
 
 ## Features
 
-- Simple setup, no need for local preinstalled Selenium Grid and browser drivers
-- Test with _Chrome_ and _Firefox_ with zero configuration
-- Integrated with [WebdriverIO](https://webdriver.io/)
-- BDD tests with [Cucumber](https://cucumber.io/docs/cucumber/) and over 150 predefined steps
-- Implement custom steps with [TypeScript](https://www.typescriptlang.org/)
-- Support for debugging tests
-- Possibility to visually see the execution in browser
-- Detailed report generation ([example](https://wswebcreation.github.io/multiple-cucumber-html-reporter/browsers/index.html))
-- Integration with CI tools
+-   Simple setup, no need for local preinstalled Selenium Grid and browser drivers
+-   Test with _Chrome_ and _Firefox_ with zero configuration
+-   Integrated with [WebdriverIO](https://webdriver.io/)
+-   BDD tests with [Cucumber](https://cucumber.io/docs/cucumber/) and over 150 predefined steps
+-   Implement custom steps with [TypeScript](https://www.typescriptlang.org/)
+-   Support for debugging tests
+-   Detailed report generation ([example](https://demo.qameta.io/allure/))
+-   Integration with CI tools ([CircleCI](https://circleci.com/docs/2.0/language-javascript/), [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/javascript?view=azure-devops))
 
 ## Requirements
 
-- To run _Firefox_ and _Chrome_ browsers with docker selenium you need:
+-   To run _Firefox_ and _Chrome_ browsers with docker selenium you need:
 
-  - `docker`
-  - `docker-compose`
+    -   `docker`
+    -   `docker-compose`
 
-- Tests are executed with Node.js, requires:
-  - `Node.js` version 10 or higher
-  - `npm` version 6 or higher
+-   Tests are executed with Node.js, requires:
+    -   `Node.js` version 10 or higher
+    -   `npm` version 6 or higher
 
 ## Quick start
 
@@ -45,8 +48,13 @@ npm run selenium
 3. Run the tests and view the report:
 
 ```sh
-# run tests and open the report
+# run tests
 npm run test
+```
+
+```sh
+# open the report
+npm run report
 ```
 
 To stop all the docker containers from step 2:
@@ -61,6 +69,7 @@ Note that selenium containers can be started once and then used across multiple 
 
 | File                                     |                                                                                                                |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| './src/features/personal-budget-app/..   | Samples of using Page Object pattern                                                                           |
 | `./src/features/google.search.feature`   | An example of testing the Google search                                                                        |
 | `./src/features/sample.snippets.feature` | Samples of using the existing test snippets. Credits [Christian Bromann](https://github.com/christian-bromann) |
 
@@ -88,9 +97,9 @@ Feature: Performing a Google Search
 All tests should be located in `./src/features/*` directory with extension `.feature` (configured in `./config/tests.config.ts`).  
 For a list of predefined and supported steps see files:
 
-- `./src/steps/given.ts`
-- `./src/steps/when.ts`
-- `./src/steps/then.ts`.
+-   `./src/steps/given.ts`
+-   `./src/steps/when.ts`
+-   `./src/steps/then.ts`.
 
 The steps are inspired from [cucumber-boilerplate](https://github.com/webdriverio/cucumber-boilerplate#list-of-predefined-steps) repository.
 
@@ -193,11 +202,9 @@ that supports integration with Node.js debugger.
 
 To debug a single feature file:
 
-- _Prerequisites_: selenium containers are running (`npm run selenium`)
+-   The `.feature` file to test is active in VS Code
 
-- The `.feature` file to test is active in VS Code
-
-- From VS Code _Run and Debug_ menu select the _Debug current test_ option
+-   From VS Code _Run and Debug_ menu select the _Debug current test_ option
 
 The test will start and run only the current file. Once started you can navigate to any `.ts` file and place a breakpoint.
 
