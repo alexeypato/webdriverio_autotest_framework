@@ -69,8 +69,7 @@ Note that selenium containers can be started once and then used across multiple 
 
 | File                                     |                                                                                                                |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| './src/features/personal-budget-app/..   | Samples of using Page Object pattern                                                                           |
-| `./src/features/google.search.feature`   | An example of testing the Google search                                                                        |
+| `./src/features/google.search.feature`   | An example of testing the Google search using Page Object pattern                                              |
 | `./src/features/sample.snippets.feature` | Samples of using the existing test snippets. Credits [Christian Bromann](https://github.com/christian-bromann) |
 
 ## Adding tests
@@ -88,10 +87,10 @@ Feature: Performing a Google Search
     Background:
         Given I open the url "https://google.com"
 
-    Scenario: Searching for Selenium Webdriver
-        When I set "Selenium Webdriver" to the inputfield "[name=q]"
-        And  I press "Enter"
-        Then I expect that element "#search" becomes displayed
+    Scenario: Searching for unknown term
+        When I set "google" to the search field
+            And  I press "Enter"
+        Then I expect that search element becomes displayed
 ```
 
 All tests should be located in `./src/features/*` directory with extension `.feature` (configured in `./config/tests.config.ts`).  

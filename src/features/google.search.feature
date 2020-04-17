@@ -8,16 +8,16 @@ Feature: Performing a Google Search
         Given I open the url "https://google.com"
 
     Scenario: Searching for unknown term
-        When I set "cO8QFWBdl0jJD5AHFOox" to the inputfield "[name=q]"
+        When I set "124334sdgdsafgsdfg2323424" to the search field
             And  I press "Enter"
-        Then I expect that element "#search" becomes not displayed
+        Then I expect that search element becomes not displayed
 
     # The @Verbose tag adds a screenshot and additional test metadata.
     @Verbose
     Scenario Outline: Searching for term "<searchItem>"
-        When I set "<searchItem>" to the inputfield "[name=q]"
+        When I set "<searchItem>" to the search field
             And  I press "Enter"
-        Then I expect that element "#search" becomes displayed
+        Then I expect that search element becomes displayed
 
         Examples:
             | searchItem         |
