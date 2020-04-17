@@ -14,7 +14,7 @@
         "test:local:chrome": "node ./node_modules/@wdio/cli/bin/wdio.js ./config/wdio.LOCAL.CHROME.conf.js --spec",
         "test:local:firefox": "node ./node_modules/@wdio/cli/bin/wdio.js ./config/wdio.LOCAL.FIREFOX.conf.js --spec",
         "report": "./node_modules/.bin/allure generate --clean ./report/allure-results -o ./report/allure-report && allure open ./report/allure-report",
-        "report:ci": "./node_modules/.bin/allure generate generate ./report/allure-results --clean -o ./report/allure-report",
+        "report:ci": "./node_modules/.bin/allure generate ./report/allure-results --clean -o ./report/allure-report",
         "report:clean": "rimraf ./report",
         "ci:build": "docker-compose -f docker-compose.ci.yml build",
         "ci": "docker-compose -f docker-compose.ci.yml up --force-recreate --renew-anon-volumes --abort-on-container-exit --exit-code-from node"
