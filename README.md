@@ -12,11 +12,11 @@ The docker selenium simplifies the setup and avoids any local installation of br
 
 -   Simple setup, no need for local preinstalled Selenium Grid and browser drivers
 -   Test with _Chrome_ and _Firefox_ with zero configuration
--   Integrated with [WebdriverIO](https://webdriver.io/)
--   BDD tests with [Cucumber](https://cucumber.io/docs/cucumber/) and over 150 predefined steps
+-   Integrated with [WebdriverIO v6](https://webdriver.io/)
+-   Page Object Pattern example, BDD tests with [Cucumber](https://cucumber.io/docs/cucumber/) and over 150 predefined steps
 -   Implement custom steps with [TypeScript](https://www.typescriptlang.org/)
 -   Support for debugging tests
--   Detailed report generation ([example](https://demo.qameta.io/allure/))
+-   Detailed report generation ([Allure Report Example](https://demo.qameta.io/allure/))
 -   Integration with CI tools ([CircleCI](https://circleci.com/docs/2.0/language-javascript/), [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/javascript?view=azure-devops))
 
 ## Requirements
